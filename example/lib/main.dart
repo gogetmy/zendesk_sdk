@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String _platformVersion = 'Unknown';
   final String _zendeskUrl = '';
   final String _applicationId = '';
@@ -27,6 +27,18 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     initPlatformState();
     initZendeskSdk();
+    WidgetsBinding.instance?.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    debugPrint("didChangeAppLifecycleState >>>> " + state.toString());
+    if (state == AppLifecycleState.resumed) {
+      ZendeskSdk().changeNavigationBarVisibility(false);
+    } else {
+      ZendeskSdk().changeNavigationBarVisibility(true);
+    }
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -54,6 +66,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> initZendeskSdk() async {
     await ZendeskSdk().initSDK(_zendeskUrl, _applicationId, _clientId);
     await ZendeskSdk().setIdentity(_jwtIdentity, 'Test', 'test@mail.com');
+    // Initialize Support SDK
     await ZendeskSdk().initSupport();
   }
 

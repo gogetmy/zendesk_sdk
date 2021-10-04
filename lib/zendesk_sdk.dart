@@ -81,4 +81,9 @@ class ZendeskSdk {
       print(e);
     }
   }
+
+  Future<dynamic> changeNavigationBarVisibility(bool isVisible) async {
+    return await _channel
+        .invokeMethod('changeNavigationBarVisibility', <String, dynamic>{'isVisible': isVisible});
+  }
 }

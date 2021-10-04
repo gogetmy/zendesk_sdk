@@ -33,7 +33,7 @@ import CommonUISDK
         navigationController.navigationBar.barTintColor = UIColor.white
     }
 
-    //navigationController.isNavigationBarHidden = true
+    navigationController.isNavigationBarHidden = true
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
 

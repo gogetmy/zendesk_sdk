@@ -48,25 +48,36 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
       case "request":
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
         let viewController = RequestUi.buildRequestUi(with: [])
+
         rootViewController?.navigationBar.barTintColor = UIColor.white
         rootViewController?.pushViewController(viewController, animated: true)
 
       case "request_list":
-        let teal = UIColor(red: 0.0, green: 0.71, blue: 0.68, alpha: 1)
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
         let config = RequestUiConfiguration()
         let viewController = RequestUi.buildRequestList(with: [config])
+
         rootViewController?.navigationBar.barTintColor = UIColor.white
         rootViewController?.pushViewController(viewController, animated: true)
         result("Launch request list successful!")
 
       case "help_center":
-        let currentVC = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+        let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
         let hcConfig = HelpCenterUiConfiguration()
-        hcConfig.showContactOptions = false
         let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
-        currentVC?.pushViewController(helpCenter, animated: true)
+
+        hcConfig.showContactOptions = false
+        rootViewController?.pushViewController(helpCenter, animated: true)
         result("iOS helpCenter UI:" + helpCenter.description + "   ")
+
+      case "changeNavigationBarVisibility":
+        let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+        guard let dic = call.arguments as? Dictionary<String, Any> else { return }
+
+        let isVisible = dic["isVisible"] as? Bool ?? false
+        rootViewController?.setNavigationBarHidden(!isVisible, animated: false)
+        result("rootViewController?.isNavigationBarHidden = isVisible >>>>>")
+
       default:
         break
     }
