@@ -29,17 +29,19 @@ class ZendeskSdk {
   }
 
   Future<void> setIdentity(
-      String? token,
-      String? name,
-      String? email,
-      ) async {
+    String? token,
+    String? name,
+    String? email,
+  ) async {
     Map arguments = {
       'token': token,
       'name': name,
       'email': email,
     };
+
     try {
-      final String result = await _channel.invokeMethod('set_identity', arguments);
+      final String result =
+          await _channel.invokeMethod('set_identity', arguments);
       print('Set identity ="$result"');
     } catch (e) {
       print(e);
@@ -73,9 +75,22 @@ class ZendeskSdk {
     }
   }
 
-  Future<void> helpCenter() async {
+  Future<void> helpCenter({
+    List<int>? articlesForCategoryIds,
+    bool? categoriesCollapsed,
+    bool? contactUsButtonVisible,
+    bool? showConversationsMenuButton,
+  }) async {
+    Map arguments = {
+      'articlesForCategoryIds': articlesForCategoryIds,
+      'categoriesCollapsed': categoriesCollapsed,
+      'contactUsButtonVisible': contactUsButtonVisible,
+      'showConversationsMenuButton': showConversationsMenuButton,
+    };
+
     try {
-      final String result = await _channel.invokeMethod('help_center');
+      final String result =
+          await _channel.invokeMethod('help_center', arguments);
       print('Start help center ="$result"');
     } catch (e) {
       print(e);
@@ -83,7 +98,7 @@ class ZendeskSdk {
   }
 
   Future<dynamic> changeNavigationBarVisibility(bool isVisible) async {
-    return await _channel
-        .invokeMethod('changeNavigationBarVisibility', <String, dynamic>{'isVisible': isVisible});
+    return await _channel.invokeMethod('changeNavigationBarVisibility',
+        <String, dynamic>{'isVisible': isVisible});
   }
 }

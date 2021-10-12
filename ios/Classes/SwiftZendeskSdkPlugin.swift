@@ -62,11 +62,23 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
         result("Launch request list successful!")
 
       case "help_center":
+
+        // TODO: handle sending dynamic list of articles
+        //let articlesForCategoryIds = arguments?["articlesForCategoryIds"] as? Array<NSNumber> ?? []
+        let categoriesCollapsed = arguments?["categoriesCollapsed"] as? Bool ?? false
+        let contactUsButtonVisible = arguments?["contactUsButtonVisible"] as? Bool ?? true
+        let showConversationsMenuButton = arguments?["showConversationsMenuButton"] as? Bool ?? true
+
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
         let hcConfig = HelpCenterUiConfiguration()
+        hcConfig.showContactOptions = contactUsButtonVisible
+
+        // Filter articles by categories
+        hcConfig.groupType = .category
+        hcConfig.groupIds = []
+
         let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
 
-        hcConfig.showContactOptions = false
         rootViewController?.pushViewController(helpCenter, animated: true)
         result("iOS helpCenter UI:" + helpCenter.description + "   ")
 
