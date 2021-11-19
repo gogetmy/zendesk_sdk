@@ -52,6 +52,16 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
         rootViewController?.navigationBar.barTintColor = UIColor.white
         rootViewController?.pushViewController(viewController, animated: true)
 
+      case "request_with_id":
+        let requestId = arguments?["requestId"] as? String
+
+        let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+        let viewController = RequestUi.buildRequestUi(requestId: requestId)
+
+        rootViewController?.navigationBar.barTintColor = UIColor.white
+        rootViewController?.pushViewController(viewController, animated: true)
+        result("Launch request with id successful!")
+
       case "request_list":
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
         let config = RequestUiConfiguration()

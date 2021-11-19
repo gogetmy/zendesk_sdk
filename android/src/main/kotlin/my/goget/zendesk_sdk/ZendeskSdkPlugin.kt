@@ -77,6 +77,14 @@ class ZendeskSdkPlugin : ActivityAware, FlutterPlugin, MethodCallHandler {
                         .show(activity);
                 result.success("Launch request successful!")
             }
+            "request_with_id" -> {
+                val requestId = call.argument<String>("requestId")
+
+                RequestActivity.builder()
+                        .withRequestId(requestId)
+                        .show(activity);
+                result.success("Launch request successful!")
+            }
             "request_list" -> {
                 RequestListActivity.builder()
                         .show(activity);

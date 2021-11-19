@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ZendeskSdk {
@@ -22,7 +23,7 @@ class ZendeskSdk {
     };
     try {
       final String result = await _channel.invokeMethod('init_sdk', arguments);
-      print('Init sdk ="$result"');
+      debugPrint('Init sdk ="$result"');
     } catch (e) {
       print(e);
     }
@@ -70,6 +71,20 @@ class ZendeskSdk {
     try {
       final String result = await _channel.invokeMethod('request_list');
       print('Start request list ="$result"');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> requestWithId(String? requestId) async {
+
+    Map arguments = {
+      'requestId': requestId,
+    };
+
+    try {
+      final String result = await _channel.invokeMethod('request_with_id', arguments);
+      print('Start request with id ="$result"');
     } catch (e) {
       print(e);
     }
