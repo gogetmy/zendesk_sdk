@@ -73,7 +73,7 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
 
       case "help_center":
 
-        // TODO: handle sending dynamic list of articles
+        // TODO: handle retrieving dynamic list of articles
         //let articlesForCategoryIds = arguments?["articlesForCategoryIds"] as? Array<NSNumber> ?? []
         let categoriesCollapsed = arguments?["categoriesCollapsed"] as? Bool ?? false
         let contactUsButtonVisible = arguments?["contactUsButtonVisible"] as? Bool ?? true
@@ -85,12 +85,23 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
 
         // Filter articles by categories
         hcConfig.groupType = .category
-        hcConfig.groupIds = []
+        // TODO: handle retrieving dynamic list of articles
+        hcConfig.groupIds = [201732367]
 
         let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
 
         rootViewController?.pushViewController(helpCenter, animated: true)
         result("iOS helpCenter UI:" + helpCenter.description + "   ")
+
+      case "article_with_id":
+        let articleId = arguments?["articleId"] as? String ?? ""
+
+        let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+        let viewController = HelpCenterUi.buildHelpCenterArticleUi(withArticleId: articleId, andConfigs: [])
+
+        rootViewController?.navigationBar.barTintColor = UIColor.white
+        rootViewController?.pushViewController(viewController, animated: true)
+        result("Launch article with id successful!")
 
       case "changeNavigationBarVisibility":
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController

@@ -77,13 +77,13 @@ class ZendeskSdk {
   }
 
   Future<void> requestWithId(String? requestId) async {
-
     Map arguments = {
       'requestId': requestId,
     };
 
     try {
-      final String result = await _channel.invokeMethod('request_with_id', arguments);
+      final String result =
+          await _channel.invokeMethod('request_with_id', arguments);
       print('Start request with id ="$result"');
     } catch (e) {
       print(e);
@@ -107,6 +107,24 @@ class ZendeskSdk {
       final String result =
           await _channel.invokeMethod('help_center', arguments);
       print('Start help center ="$result"');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> articleWithId(
+    String? articleId,
+    bool? contactUsButtonVisible,
+  ) async {
+    Map arguments = {
+      'articleId': articleId,
+      'contactUsButtonVisible': contactUsButtonVisible,
+    };
+
+    try {
+      final String result =
+          await _channel.invokeMethod('article_with_id', arguments);
+      print('Start article with id ="$result"');
     } catch (e) {
       print(e);
     }

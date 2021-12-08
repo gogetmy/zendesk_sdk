@@ -17,6 +17,7 @@ import zendesk.core.JwtIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
 import zendesk.support.guide.HelpCenterActivity
+import zendesk.support.guide.ViewArticleActivity
 import zendesk.support.request.RequestActivity
 import zendesk.support.requestlist.RequestListActivity
 
@@ -77,18 +78,18 @@ class ZendeskSdkPlugin : ActivityAware, FlutterPlugin, MethodCallHandler {
                         .show(activity);
                 result.success("Launch request successful!")
             }
+            "request_list" -> {
+                RequestListActivity.builder()
+                        .show(activity);
+                result.success("Launch request list successful!")
+            }
             "request_with_id" -> {
                 val requestId = call.argument<String>("requestId")!!
 
                 RequestActivity.builder()
                         .withRequestId(requestId)
                         .show(activity);
-                result.success("Launch request successful!")
-            }
-            "request_list" -> {
-                RequestListActivity.builder()
-                        .show(activity);
-                result.success("Launch request list successful!")
+                result.success("Launch request with id successful!")
             }
             "help_center" -> {
                 val articlesForCategoryIds = call.argument<List<Long>>("articlesForCategoryIds") ?: mutableListOf()
@@ -105,7 +106,17 @@ class ZendeskSdkPlugin : ActivityAware, FlutterPlugin, MethodCallHandler {
                         .config()
                 HelpCenterActivity.builder()
                         .show(activity, helpCenterConfig)
-                result.success("Launch request list successful!")
+                result.success("Launch help center successful!")
+            }
+            "article_with_id" -> {
+                val articleId = call.argument<String>("articleId")!!
+                val contactUsButtonVisible = call.argument<Boolean>("contactUsButtonVisible")
+                        ?: false
+
+                ViewArticleActivity.builder(articleId.toLong())
+                        .withContactUsButtonVisible(contactUsButtonVisible)
+                        .show(activity);
+                result.success("Launch article with id successful!")
             }
             "changeNavigationBarVisibility" -> {
                 // Not implemented for Android
