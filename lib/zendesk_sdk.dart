@@ -23,7 +23,7 @@ class ZendeskSdk {
     };
     try {
       final String result = await _channel.invokeMethod('init_sdk', arguments);
-      debugPrint('Init sdk ="$result"');
+      //debugPrint('Init sdk ="$result"');
     } catch (e) {
       print(e);
     }
@@ -43,7 +43,7 @@ class ZendeskSdk {
     try {
       final String result =
           await _channel.invokeMethod('set_identity', arguments);
-      print('Set identity ="$result"');
+      //print('Set identity ="$result"');
     } catch (e) {
       print(e);
     }
@@ -52,7 +52,7 @@ class ZendeskSdk {
   Future<void> initSupport() async {
     try {
       final String result = await _channel.invokeMethod('init_support');
-      print('Init support ="$result"');
+      //print('Init support ="$result"');
     } catch (e) {
       print(e);
     }
@@ -61,7 +61,7 @@ class ZendeskSdk {
   Future<void> requestActivity() async {
     try {
       final String result = await _channel.invokeMethod('request');
-      print('Start request ="$result"');
+      //print('Start request ="$result"');
     } catch (e) {
       print(e);
     }
@@ -70,7 +70,7 @@ class ZendeskSdk {
   Future<void> requestList() async {
     try {
       final String result = await _channel.invokeMethod('request_list');
-      print('Start request list ="$result"');
+      //print('Start request list ="$result"');
     } catch (e) {
       print(e);
     }
@@ -84,7 +84,7 @@ class ZendeskSdk {
     try {
       final String result =
           await _channel.invokeMethod('request_with_id', arguments);
-      print('Start request with id ="$result"');
+      //print('Start request with id ="$result"');
     } catch (e) {
       print(e);
     }
@@ -106,7 +106,7 @@ class ZendeskSdk {
     try {
       final String result =
           await _channel.invokeMethod('help_center', arguments);
-      print('Start help center ="$result"');
+      //print('Start help center ="$result"');
     } catch (e) {
       print(e);
     }
@@ -124,7 +124,7 @@ class ZendeskSdk {
     try {
       final String result =
           await _channel.invokeMethod('article_with_id', arguments);
-      print('Start article with id ="$result"');
+      //print('Start article with id ="$result"');
     } catch (e) {
       print(e);
     }
