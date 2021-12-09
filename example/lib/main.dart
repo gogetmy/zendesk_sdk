@@ -111,6 +111,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  ZendeskSdk().helpCenterWithSectionIds(
+                    articlesForSectionIds: [115000620113],
+                    contactUsButtonVisible: false,
+                    showConversationsMenuButton: false,
+                  );
+                },
+                child: const Text("Help Center with section ids"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
                   ZendeskSdk().articleWithId("360015668233", false);
                 },
                 child: const Text("Article With Id"),

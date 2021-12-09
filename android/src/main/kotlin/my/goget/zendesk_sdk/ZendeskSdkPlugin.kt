@@ -99,7 +99,24 @@ class ZendeskSdkPlugin : ActivityAware, FlutterPlugin, MethodCallHandler {
                 val showConversationsMenuButton = call.argument<Boolean>("showConversationsMenuButton")
                         ?: true
                 val helpCenterConfig: Configuration = HelpCenterActivity.builder()
-                        .withArticlesForCategoryIds(articlesForCategoryIds) //201732367L
+                        .withArticlesForCategoryIds(articlesForCategoryIds)
+                        .withCategoriesCollapsed(categoriesCollapsed)
+                        .withContactUsButtonVisible(contactUsButtonVisible)
+                        .withShowConversationsMenuButton(showConversationsMenuButton)
+                        .config()
+                HelpCenterActivity.builder()
+                        .show(activity, helpCenterConfig)
+                result.success("Launch help center successful!")
+            }
+            "help_center_with_section_ids" -> {
+                val articlesForSectionIds = call.argument<List<Long>>("articlesForSectionIds") ?: mutableListOf()
+                val categoriesCollapsed = call.argument<Boolean>("categoriesCollapsed") ?: false
+                val contactUsButtonVisible = call.argument<Boolean>("contactUsButtonVisible")
+                        ?: true
+                val showConversationsMenuButton = call.argument<Boolean>("showConversationsMenuButton")
+                        ?: true
+                val helpCenterConfig: Configuration = HelpCenterActivity.builder()
+                        .withArticlesForSectionIds(articlesForSectionIds)
                         .withCategoriesCollapsed(categoriesCollapsed)
                         .withContactUsButtonVisible(contactUsButtonVisible)
                         .withShowConversationsMenuButton(showConversationsMenuButton)

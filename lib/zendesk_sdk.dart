@@ -112,6 +112,28 @@ class ZendeskSdk {
     }
   }
 
+  Future<void> helpCenterWithSectionIds({
+    List<int>? articlesForSectionIds,
+    bool? categoriesCollapsed,
+    bool? contactUsButtonVisible,
+    bool? showConversationsMenuButton,
+  }) async {
+    Map arguments = {
+      'articlesForSectionIds': articlesForSectionIds,
+      'categoriesCollapsed': categoriesCollapsed,
+      'contactUsButtonVisible': contactUsButtonVisible,
+      'showConversationsMenuButton': showConversationsMenuButton,
+    };
+
+    try {
+      final String result =
+      await _channel.invokeMethod('help_center_with_section_ids', arguments);
+      print('Start help center with section ids ="$result"');
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> articleWithId(
     String? articleId,
     bool? contactUsButtonVisible,
