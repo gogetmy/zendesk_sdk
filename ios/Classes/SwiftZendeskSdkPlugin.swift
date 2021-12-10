@@ -109,10 +109,10 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
         // TODO: handle retrieving dynamic list of articles
         if (!sectionName.isEmpty) {
             switch sectionName {
-                case "referral":
-                    hcConfig.groupIds = [900000126563]
-                case "insurance":
-                    hcConfig.groupIds = [900000170586]
+//                 case "referral":
+//                     hcConfig.groupIds = [900000126563]
+//                 case "insurance":
+//                     hcConfig.groupIds = [900000170586]
                 default :
                     hcConfig.groupIds
             }
