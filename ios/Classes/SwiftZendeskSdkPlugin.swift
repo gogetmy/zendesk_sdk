@@ -95,6 +95,7 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
       case "help_center_with_section_ids":
         // TODO: handle retrieving dynamic list of articles section ids
         //let articlesForSectionIds = arguments?["articlesForSectionIds"] as? Array<NSNumber> ?? []
+        let sectionName = arguments?["sectionName"] as? String ?? ""
         let categoriesCollapsed = arguments?["categoriesCollapsed"] as? Bool ?? false
         let contactUsButtonVisible = arguments?["contactUsButtonVisible"] as? Bool ?? true
         let showConversationsMenuButton = arguments?["showConversationsMenuButton"] as? Bool ?? true
@@ -106,7 +107,17 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
         // Filter articles by section ids
         hcConfig.groupType = .section
         // TODO: handle retrieving dynamic list of articles
-        hcConfig.groupIds = [115000620113]
+        if (!sectionName.isEmpty) {
+            switch sectionName {
+                case "referral":
+                    hcConfig.groupIds = [900000126563]
+                case "insurance":
+                    hcConfig.groupIds = [900000170586]
+                default :
+                    hcConfig.groupIds
+            }
+        }
+
 
         let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
 
