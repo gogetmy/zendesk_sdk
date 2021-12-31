@@ -72,8 +72,7 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
         result("Launch request list successful!")
 
       case "help_center":
-        // TODO: handle retrieving dynamic list of articles category ids
-        //let articlesForCategoryIds = arguments?["articlesForCategoryIds"] as? Array<NSNumber> ?? []
+        let articlesForCategoryIds = arguments?["articlesForCategoryIds"] as? Array<NSNumber> ?? []
         let categoriesCollapsed = arguments?["categoriesCollapsed"] as? Bool ?? false
         let contactUsButtonVisible = arguments?["contactUsButtonVisible"] as? Bool ?? true
         let showConversationsMenuButton = arguments?["showConversationsMenuButton"] as? Bool ?? true
@@ -84,8 +83,7 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
 
         // Filter articles by category ids
         hcConfig.groupType = .category
-        // TODO: handle retrieving dynamic list of articles
-        hcConfig.groupIds = [201732367]
+        hcConfig.groupIds = articlesForCategoryIds
 
         let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
 
@@ -93,9 +91,7 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
         result("iOS helpCenter UI:" + helpCenter.description + "   ")
 
       case "help_center_with_section_ids":
-        // TODO: handle retrieving dynamic list of articles section ids
-        //let articlesForSectionIds = arguments?["articlesForSectionIds"] as? Array<NSNumber> ?? []
-        let sectionName = arguments?["sectionName"] as? String ?? ""
+        let articlesForSectionIds = arguments?["articlesForSectionIds"] as? Array<NSNumber> ?? []
         let categoriesCollapsed = arguments?["categoriesCollapsed"] as? Bool ?? false
         let contactUsButtonVisible = arguments?["contactUsButtonVisible"] as? Bool ?? true
         let showConversationsMenuButton = arguments?["showConversationsMenuButton"] as? Bool ?? true
@@ -106,18 +102,7 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
 
         // Filter articles by section ids
         hcConfig.groupType = .section
-        // TODO: handle retrieving dynamic list of articles
-        if (!sectionName.isEmpty) {
-            switch sectionName {
-//                 case "referral":
-//                     hcConfig.groupIds = [900000126563]
-//                 case "insurance":
-//                     hcConfig.groupIds = [900000170586]
-                default :
-                    hcConfig.groupIds
-            }
-        }
-
+        hcConfig.groupIds = articlesForSectionIds
 
         let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
 

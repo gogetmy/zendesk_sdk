@@ -114,14 +114,12 @@ class ZendeskSdk {
 
   Future<void> helpCenterWithSectionIds({
     List<int>? articlesForSectionIds,
-    String? sectionName,
     bool? categoriesCollapsed,
     bool? contactUsButtonVisible,
     bool? showConversationsMenuButton,
   }) async {
     Map arguments = {
       'articlesForSectionIds': articlesForSectionIds,
-      'sectionName': sectionName,
       'categoriesCollapsed': categoriesCollapsed,
       'contactUsButtonVisible': contactUsButtonVisible,
       'showConversationsMenuButton': showConversationsMenuButton,
