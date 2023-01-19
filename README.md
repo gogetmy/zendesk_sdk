@@ -2,6 +2,14 @@
 
 A new flutter plugin project.
 
+# gogetter-flutter
+
+### Updating Zendesk SDK
+
+1. Install the latest version of the `zendesk_sdk` using `flutter pub get`
+
+2. Go into the `ios` folder and run `pod update ZendeskSupportSDK` to ensure the latest version of the SDK is installed.
+
 ## Getting Started
 
 This project is a starting point for a Flutter
