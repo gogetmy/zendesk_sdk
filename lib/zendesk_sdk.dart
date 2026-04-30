@@ -129,9 +129,22 @@ class ZendeskSdk {
     try {
       final String result = await _channel.invokeMethod('request_list');
       _log('requestList native result="$result"');
+      _debugGetAllRequests();
     } catch (e) {
       _logError('requestList', e);
       rethrow;
+    }
+  }
+
+  Future<void> _debugGetAllRequests() async {
+    _log('debugGetAllRequests called');
+    try {
+      final String result = await _channel.invokeMethod(
+        'debug_get_all_requests',
+      );
+      _log('debugGetAllRequests native result="$result"');
+    } catch (e) {
+      _logError('debugGetAllRequests', e);
     }
   }
 

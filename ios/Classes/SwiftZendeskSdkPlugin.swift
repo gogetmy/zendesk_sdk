@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import SupportSDK
+import SupportProvidersSDK
 import ZendeskCoreSDK
 
 public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
@@ -70,6 +71,27 @@ public class SwiftZendeskSdkPlugin: NSObject, FlutterPlugin {
         rootViewController?.navigationBar.barTintColor = UIColor.white
         rootViewController?.pushViewController(viewController, animated: true)
         result("Launch request list successful!")
+
+      case "debug_get_all_requests":
+        print("[ZendeskSdkPlugin] debug_get_all_requests: starting")
+        let provider = ZDKRequestProvider()
+        provider.getAllRequests { requestsWithAgents, error in
+          if let error = error as NSError? {
+            let message = "debug getAllRequests failed domain=\(error.domain) code=\(error.code) description=\(error.localizedDescription) userInfo=\(error.userInfo)"
+            print("[ZendeskSdkPlugin] debug_get_all_requests: \(message)")
+            DispatchQueue.main.async {
+              result(message)
+            }
+          } else {
+            let requestCount = requestsWithAgents?.requests.count ?? 0
+            let agentCount = requestsWithAgents?.commentingAgents.count ?? 0
+            let message = "debug getAllRequests succeeded requestCount=\(requestCount) commentingAgentCount=\(agentCount)"
+            print("[ZendeskSdkPlugin] debug_get_all_requests: \(message)")
+            DispatchQueue.main.async {
+              result(message)
+            }
+          }
+        }
 
       case "help_center":
         let articlesForCategoryIds = arguments?["articlesForCategoryIds"] as? Array<NSNumber> ?? []

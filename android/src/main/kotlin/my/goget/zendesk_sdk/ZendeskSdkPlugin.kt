@@ -1,8 +1,11 @@
 package my.goget.zendesk_sdk
 
 import android.app.Activity
+import android.util.Log
 import androidx.annotation.NonNull
 
+import com.zendesk.service.ErrorResponse
+import com.zendesk.service.ZendeskCallback
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -15,6 +18,7 @@ import zendesk.core.AnonymousIdentity
 import zendesk.core.Identity
 import zendesk.core.JwtIdentity
 import zendesk.core.Zendesk
+import zendesk.support.Request
 import zendesk.support.Support
 import zendesk.support.guide.HelpCenterActivity
 import zendesk.support.guide.ViewArticleActivity
@@ -29,6 +33,7 @@ class ZendeskSdkPlugin : ActivityAware, FlutterPlugin, MethodCallHandler {
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
     private lateinit var activity: Activity
+    private val tag = "ZendeskSdkPlugin"
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "zendesk_sdk")
@@ -82,6 +87,29 @@ class ZendeskSdkPlugin : ActivityAware, FlutterPlugin, MethodCallHandler {
                 RequestListActivity.builder()
                         .show(activity);
                 result.success("Launch request list successful!")
+            }
+            "debug_get_all_requests" -> {
+                Log.d(tag, "debug_get_all_requests: starting")
+                Support.INSTANCE.provider().requestProvider().getAllRequests(object : ZendeskCallback<List<Request>>() {
+                    override fun onSuccess(requests: List<Request>) {
+                        val message = "debug getAllRequests succeeded requestCount=${requests.size}"
+                        Log.d(tag, "debug_get_all_requests: $message")
+                        result.success(message)
+                    }
+
+                    override fun onError(errorResponse: ErrorResponse) {
+                        val message = "debug getAllRequests failed " +
+                                "status=${errorResponse.status}, " +
+                                "reason=${errorResponse.reason}, " +
+                                "url=${errorResponse.url}, " +
+                                "networkError=${errorResponse.isNetworkError}, " +
+                                "httpError=${errorResponse.isHttpError}, " +
+                                "conversionError=${errorResponse.isConversionError}, " +
+                                "responseBody=${errorResponse.responseBody}"
+                        Log.d(tag, "debug_get_all_requests: $message")
+                        result.success(message)
+                    }
+                })
             }
             "request_with_id" -> {
                 val requestId = call.argument<String>("requestId")!!
